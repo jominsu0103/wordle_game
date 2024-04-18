@@ -23,6 +23,7 @@ footer {
   background-color: #bfc1c3;
   border-radius: 10px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .wide {
@@ -35,6 +36,7 @@ footer {
   border-radius: 10px;
   font-size: small;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .back-space-icon img {
