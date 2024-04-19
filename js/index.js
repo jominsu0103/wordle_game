@@ -1,16 +1,71 @@
-const anwser = "APPLE";
-
 let index = 0;
 let attempts = 0;
 let timer;
 
+let selectedAnswer;
+let previousDate;
+
+const backspaceIcon = document.getElementById('backspaceIcon');
+
+const updateAnswer = () => {
+  const answers = [
+    "APPLE", "CHAIR", "SMILE", "TIGER", "BEACH", "ANGEL", "MUSIC", "LEMON", "EARTH", "HAPPY",
+    "GRAPE", "PLANT", "OCEAN", "BREAD", "DREAM", "STUDY", "CHILD", "HORSE", "RABBIT", "STORM",
+    "SPACE", "FAIRY", "HOUSE", "MAPLE", "DRINK", "LIGHT", "PANDA", "PEACH", "SNAKE", "TEETH",
+    "PLANT", "MOUSE", "PIZZA", "WATER", "QUEEN", "CLOCK", "TIGER", "SMILE", "MONEY", "RIVER",
+    "SHOES", "PAPER", "MANGO", "PEARL", "BRAIN", "PAINT", "FAIRY", "TIGER", "SWORD", "PIZZA"
+];
+  const randomIndex = Math.floor(Math.random() * answers.length);
+  selectedAnswer = answers[randomIndex];
+  console.log(selectedAnswer);
+};
+
+const isDateChanged = () => {
+  const currentDate = new Date().toDateString();
+  if (currentDate !== previousDate) {
+      previousDate = currentDate;
+      return true;
+  }
+  return false;
+};
+
+const getStoredAnswer = () => {
+  const storedAnswer = localStorage.getItem("selectedAnswer");
+  if (storedAnswer) {
+    selectedAnswer = storedAnswer;
+  } else {
+    updateAnswer();
+    localStorage.setItem("selectedAnswer", selectedAnswer);
+  }
+};
+
 const appStart = () => {
+  if (isDateChanged()) {
+    getStoredAnswer();
+  }
+
+  const handleBackspaceClick = () => {
+    handleBackspace();
+  };
+
   const displayGameover = () => {
     const div = document.createElement("div");
     div.innerText = "🥳 게임이 종료됐습니다. 🥳";
     div.style =
       "display:flex; justify-content:center; align-items:center; position:absolute; top:250px; left:755px; background-color:white; width:400px; height:100px; border:1px solid black; border-radius: 15px;font-size: large; font-weight: bold;";
     document.body.appendChild(div);
+  };
+
+  const helpMessage = () => {
+    const div = document.createElement("div");
+    div.innerText = "🤔 어려우신가요? 🤔";
+    div.style =
+      "display:flex; justify-content:center; align-items:center; position:absolute; top:250px; left:755px; background-color:white; width:400px; height:100px; border:1px solid black; border-radius: 15px;font-size: large; font-weight: bold;";
+    document.body.appendChild(div);
+
+    setTimeout(() => {
+      div.remove();
+    }, 3000);
   };
 
   const nextLine = () => {
@@ -29,21 +84,27 @@ const appStart = () => {
   };
 
   const handleEnterKey = () => {
-    let anwserCount = 0;
+    let answerCount = 0;
     for (let i = 0; i < 5; i++) {
       const block = document.querySelector(
         `.board-block[data-index='${attempts}${i}']`
       );
       const letter = block.innerText;
-      const anwserWord = anwser[i];
-      if (letter === anwserWord) {
-        anwserCount++;
+      const answerWord = selectedAnswer[i];
+      if (letter === answerWord) {
+        answerCount++;
         block.style.background = "#6aaa64";
-      } else if (anwser.includes(letter)) block.style.background = "#c9b458";
+      } else if (selectedAnswer.includes(letter)) block.style.background = "#c9b458";
       else block.style.background = "#787c7e";
       block.style.color = "white";
+      const physicalKey = document.querySelector(
+        `.keyboard-column[data-key='${letter}']`
+      );
+      if (physicalKey) {
+        physicalKey.style.background = block.style.background;
+      }
     }
-    if (anwserCount === 5) {
+    if (answerCount === 5) {
       gameOver();
     } else {
       nextLine();
@@ -58,6 +119,29 @@ const appStart = () => {
       preBlock.innerText = "";
     }
     if (index !== 0) index -= 1;
+  };
+
+  const handleKeyboardClick = (event) => {
+    const key = event.target.dataset.key;
+    console.log(key);
+    const thisBlock = document.querySelector(
+      `.board-block[data-index='${attempts}${index}']`
+    );
+    if (key === "Backspace") handleBackspace();
+    else if (index === 5) {
+      if (key === "Enter") handleEnterKey();
+      else return;
+    } else if (65 <= key.charCodeAt(0) && key.charCodeAt(0) <= 90) {
+      thisBlock.innerText = key;
+      index++;
+    }
+  };
+
+  const keyboardClickEventListener = () => {
+    const keyboardBlock = document.querySelectorAll(".keyboard-column");
+    keyboardBlock.forEach((key) => {
+      key.addEventListener("click", handleKeyboardClick);
+    });
   };
 
   const handleKeyDown = (event) => {
@@ -88,9 +172,13 @@ const appStart = () => {
     };
 
     timer = setInterval(setTime, 1000);
+
+    setTimeout(helpMessage, 60000);
   };
 
   startTimer();
+  keyboardClickEventListener();
+  backspaceIcon.addEventListener('click', handleBackspaceClick);
   window.addEventListener("keydown", handleKeyDown);
 };
 
