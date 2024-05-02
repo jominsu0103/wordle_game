@@ -1,0 +1,79 @@
+.modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  width: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: none;
+}
+
+/* 닫기 버튼 */
+.x-btn {
+  position: relative;
+  left: 370px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+/* 제목 스타일 */
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* 내용 스타일 */
+.subject {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* 예시 부분 스타일 */
+.example {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  font-weight: bold;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* 예시 단어 스타일 */
+.word-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.word-column {
+  display: flex;
+  margin-right: 5px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  width: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.color-green {
+  background-color: #6aaa64;
+  color: white;
+}
+
+.color-yellow {
+  background-color: #c9b458;
+  color: white;
+}
+
+.color-gray {
+  background-color: #787c7e;
+  color: white;
+}

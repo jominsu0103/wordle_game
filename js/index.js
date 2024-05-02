@@ -104,6 +104,16 @@ const flipBlockAnimation = () => {
   });
 };
 
+document.getElementById("help-btn").addEventListener("click", function () {
+  
+  document.querySelector(".modal-content").style.display = "block";
+});
+
+document.querySelector(".x-btn").addEventListener("click", function () {
+  
+  document.querySelector(".modal-content").style.display = "none";
+});
+
 const appStart = () => {
   if (isDateChanged()) {
     getStoredAnswer();

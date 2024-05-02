@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css//modal.css" />
   </head>
   <body>
     <header>
@@ -15,7 +16,7 @@
       </div>
       <div class="header-title">Wordle Game</div>
       <div class="header-column">
-        <div class="header-icon">
+        <div class="header-icon" id="help-btn">
           <img src="assets/help.svg" alt="" />
         </div>
         <div class="header-icon">
@@ -69,6 +70,63 @@
         <div class="board-block" data-index="52"></div>
         <div class="board-block" data-index="53"></div>
         <div class="board-block" data-index="54"></div>
+      </div>
+      <div class="modal-content">
+        <div class="x-btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18 18 6M6 6l12 12"
+            />
+          </svg>
+        </div>
+        <div class="title">How To Play</div>
+        <div class="subject">1. 6번의 시도내에 단어를 맞춰야합니다.</div>
+        <div class="subject">2. 5글자를 작성하셔야 합니다.</div>
+        <div class="subject">
+          3. 타일의 색상을 통해 정답을 추측할 수 있습니다.
+        </div>
+        <div class="example">
+          Example
+          <div class="word-row">
+            <div class="word-column color-green">W</div>
+            <div class="word-column">E</div>
+            <div class="word-column">A</div>
+            <div class="word-column">R</div>
+            <div class="word-column">Y</div>
+          </div>
+          <div class="word-description">
+            W는 정답에 포함되어 있고 올바른 위치입니다.
+          </div>
+          <div class="word-row">
+            <div class="word-column">P</div>
+            <div class="word-column color-yellow">I</div>
+            <div class="word-column">L</div>
+            <div class="word-column">L</div>
+            <div class="word-column">S</div>
+          </div>
+          <div class="word-description">
+            I는 정답에 포함되어 있지만 위치가 맞지않습니다.
+          </div>
+          <div class="word-row">
+            <div class="word-column">V</div>
+            <div class="word-column">A</div>
+            <div class="word-column">G</div>
+            <div class="word-column color-gray">U</div>
+            <div class="word-column">E</div>
+          </div>
+          <div class="word-description">
+            U는 정답에 포함되어 있지않고 위치도 맞지않습니다.
+          </div>
+        </div>
       </div>
     </main>
     <footer>
