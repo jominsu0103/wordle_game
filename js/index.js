@@ -5,16 +5,61 @@ let timer;
 let selectedAnswer;
 let previousDate;
 
-const backspaceIcon = document.getElementById('backspaceIcon');
+const backspaceIcon = document.getElementById("backspaceIcon");
 
 const updateAnswer = () => {
   const answers = [
-    "APPLE", "CHAIR", "SMILE", "TIGER", "BEACH", "ANGEL", "MUSIC", "LEMON", "EARTH", "HAPPY",
-    "GRAPE", "PLANT", "OCEAN", "BREAD", "DREAM", "STUDY", "CHILD", "HORSE", "RABBIT", "STORM",
-    "SPACE", "FAIRY", "HOUSE", "MAPLE", "DRINK", "LIGHT", "PANDA", "PEACH", "SNAKE", "TEETH",
-    "PLANT", "MOUSE", "PIZZA", "WATER", "QUEEN", "CLOCK", "TIGER", "SMILE", "MONEY", "RIVER",
-    "SHOES", "PAPER", "MANGO", "PEARL", "BRAIN", "PAINT", "FAIRY", "TIGER", "SWORD", "PIZZA"
-];
+    "APPLE",
+    "CHAIR",
+    "SMILE",
+    "TIGER",
+    "BEACH",
+    "ANGEL",
+    "MUSIC",
+    "LEMON",
+    "EARTH",
+    "HAPPY",
+    "GRAPE",
+    "PLANT",
+    "OCEAN",
+    "BREAD",
+    "DREAM",
+    "STUDY",
+    "CHILD",
+    "HORSE",
+    "RABBIT",
+    "STORM",
+    "SPACE",
+    "FAIRY",
+    "HOUSE",
+    "MAPLE",
+    "DRINK",
+    "LIGHT",
+    "PANDA",
+    "PEACH",
+    "SNAKE",
+    "TEETH",
+    "PLANT",
+    "MOUSE",
+    "PIZZA",
+    "WATER",
+    "QUEEN",
+    "CLOCK",
+    "TIGER",
+    "SMILE",
+    "MONEY",
+    "RIVER",
+    "SHOES",
+    "PAPER",
+    "MANGO",
+    "PEARL",
+    "BRAIN",
+    "PAINT",
+    "FAIRY",
+    "TIGER",
+    "SWORD",
+    "PIZZA",
+  ];
   const randomIndex = Math.floor(Math.random() * answers.length);
   selectedAnswer = answers[randomIndex];
   console.log(selectedAnswer);
@@ -23,8 +68,8 @@ const updateAnswer = () => {
 const isDateChanged = () => {
   const currentDate = new Date().toDateString();
   if (currentDate !== previousDate) {
-      previousDate = currentDate;
-      return true;
+    previousDate = currentDate;
+    return true;
   }
   return false;
 };
@@ -37,6 +82,26 @@ const getStoredAnswer = () => {
     updateAnswer();
     localStorage.setItem("selectedAnswer", selectedAnswer);
   }
+};
+
+const shakeBlockAnimation = () => {
+  const blocks = document.querySelectorAll(".board-block");
+  blocks.forEach((block) => {
+    block.classList.add("shake-animation");
+    setTimeout(() => {
+      block.classList.remove("shake-animation");
+    }, 400); // 애니메이션 시간(0.4초) 이후에 클래스 제거
+  });
+};
+
+const flipBlockAnimation = () => {
+  const blocks = document.querySelectorAll(".board-block");
+  blocks.forEach((block) => {
+    block.classList.add("flip-horizontal-animation");
+    setTimeout(() => {
+      block.classList.remove("flip-horizontal-animation");
+    }, 600); // 애니메이션 시간(0.6초) 이후에 클래스 제거
+  });
 };
 
 const appStart = () => {
@@ -85,6 +150,9 @@ const appStart = () => {
 
   const handleEnterKey = () => {
     let answerCount = 0;
+    let wrongCount = 0;
+    const correctBlocks = [];
+    const wrongBlocks = [];
     for (let i = 0; i < 5; i++) {
       const block = document.querySelector(
         `.board-block[data-index='${attempts}${i}']`
@@ -94,8 +162,14 @@ const appStart = () => {
       if (letter === answerWord) {
         answerCount++;
         block.style.background = "#6aaa64";
-      } else if (selectedAnswer.includes(letter)) block.style.background = "#c9b458";
-      else block.style.background = "#787c7e";
+        correctBlocks.push(i);
+      } else if (selectedAnswer.includes(letter))
+        block.style.background = "#c9b458";
+      else {
+        wrongCount++;
+        block.style.background = "#787c7e";
+        wrongBlocks.push(i);
+      }
       block.style.color = "white";
       const physicalKey = document.querySelector(
         `.keyboard-column[data-key='${letter}']`
@@ -105,7 +179,21 @@ const appStart = () => {
       }
     }
     if (answerCount === 5) {
+      correctBlocks.forEach((index) => {
+        const block = document.querySelector(
+          `.board-block[data-index='${attempts}${index}']`
+        );
+        block.classList.add("flip-horizontal-animation");
+      });
       gameOver();
+    } else if (wrongCount === 5) {
+      wrongBlocks.forEach((index) => {
+        const block = document.querySelector(
+          `.board-block[data-index='${attempts}${index}']`
+        );
+        block.classList.add("shake-animation");
+      });
+      nextLine();
     } else {
       nextLine();
     }
@@ -178,7 +266,7 @@ const appStart = () => {
 
   startTimer();
   keyboardClickEventListener();
-  backspaceIcon.addEventListener('click', handleBackspaceClick);
+  backspaceIcon.addEventListener("click", handleBackspaceClick);
   window.addEventListener("keydown", handleKeyDown);
 };
 
