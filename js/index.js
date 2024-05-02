@@ -117,7 +117,7 @@ const appStart = () => {
     const div = document.createElement("div");
     div.innerText = "🥳 게임이 종료됐습니다. 🥳";
     div.style =
-      "display:flex; justify-content:center; align-items:center; position:absolute; top:250px; left:755px; background-color:white; width:400px; height:100px; border:1px solid black; border-radius: 15px;font-size: large; font-weight: bold;";
+      "display:flex; justify-content:center; align-items:center; position:absolute; bottom:100px; left:755px; background-color:white; width:400px; height:100px; border:1px solid black; border-radius: 15px;font-size: large; font-weight: bold;";
     document.body.appendChild(div);
   };
 
@@ -125,7 +125,7 @@ const appStart = () => {
     const div = document.createElement("div");
     div.innerText = "🤔 어려우신가요? 🤔";
     div.style =
-      "display:flex; justify-content:center; align-items:center; position:absolute; top:250px; left:755px; background-color:white; width:400px; height:100px; border:1px solid black; border-radius: 15px;font-size: large; font-weight: bold;";
+      "display:flex; justify-content:center; align-items:center; position:absolute; bottom:100px; left:755px; background-color:white; width:400px; height:100px; border:1px solid black; border-radius: 15px;font-size: large; font-weight: bold;";
     document.body.appendChild(div);
 
     setTimeout(() => {
